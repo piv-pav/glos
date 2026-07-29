@@ -8,8 +8,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/piv-pav/gls/internal/index"
-	"github.com/piv-pav/gls/internal/tokenizer"
+	"github.com/piv-pav/glos/internal/index"
+	"github.com/piv-pav/glos/internal/tokenizer"
 )
 
 // Indexer handles file indexing operations

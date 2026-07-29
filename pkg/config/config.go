@@ -18,7 +18,7 @@ type Config struct {
 func DefaultConfig() *Config {
 	homeDir, _ := os.UserHomeDir()
 	return &Config{
-		StorageDir:  filepath.Join(homeDir, ".cache", "gls"),
+		StorageDir:  filepath.Join(homeDir, ".cache", "glos"),
 		Indexes:     make(map[string][]string),
 		FuzzySearch: false,
 		MaxDistance: 2,

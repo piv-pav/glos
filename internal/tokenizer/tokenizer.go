@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/piv-pav/gls/internal/util"
+	"github.com/piv-pav/glos/internal/util"
 )
 
 // Token represents a processed token with its position

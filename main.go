@@ -7,8 +7,8 @@ import (
 	"runtime/debug"
 	"strings"
 
-	"github.com/piv-pav/gls/internal/search"
-	"github.com/piv-pav/gls/pkg/config"
+	"github.com/piv-pav/glos/internal/search"
+	"github.com/piv-pav/glos/pkg/config"
 )
 
 const (
@@ -35,7 +35,7 @@ func main() {
 
 	// Load configuration
 	homeDir, _ := os.UserHomeDir()
-	configPath := filepath.Join(homeDir, ".config", "gls", "config.json")
+	configPath := filepath.Join(homeDir, ".config", "glos", "config.json")
 	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Printf("%sError loading config: %v%s\n", colorRed, err, colorReset)
@@ -48,8 +48,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Parse: gls [index_name] <command> <args...>
-	// or: gls <query> (default search with default index)
+	// Parse: glos [index_name] <command> <args...>
+	// or: glos <query> (default search with default index)
 	indexName := ""
 	command := ""
 	argOffset := 1
@@ -64,11 +64,11 @@ func main() {
 	firstArg := os.Args[1]
 	
 	if knownCommands[firstArg] {
-		// gls <command> <args...>
+		// glos <command> <args...>
 		command = firstArg
 		argOffset = 2
 	} else if len(os.Args) >= 3 && knownCommands[os.Args[2]] {
-		// gls <index_name> <command> <args...>
+		// glos <index_name> <command> <args...>
 		indexName = firstArg
 		command = os.Args[2]
 		argOffset = 3
@@ -76,25 +76,25 @@ func main() {
 		// Check if first arg looks like an index name (exists in config)
 		// or if it starts with a quote (likely a query)
 		if strings.HasPrefix(firstArg, `"`) || strings.HasPrefix(firstArg, `'`) {
-			// gls "query" = gls search "query"
+			// glos "query" = glos search "query"
 			command = "search"
 			argOffset = 1
 		} else {
 			// Check if it's a known index name
 			_, indexExists := cfg.Indexes[firstArg]
 			if indexExists && len(os.Args) >= 3 {
-				// gls <index_name> <query>
+				// glos <index_name> <query>
 				indexName = firstArg
 				command = "search"
 				argOffset = 2
 			} else {
-				// Default: gls <query>
+				// Default: glos <query>
 				command = "search"
 				argOffset = 1
 			}
 		}
 	} else {
-		// Default: gls <query> = gls search <query>
+		// Default: glos <query> = glos search <query>
 		command = "search"
 		argOffset = 1
 	}
@@ -132,7 +132,7 @@ func handleIndex(cfg *config.Config, indexName string, argOffset int) {
 		// No path provided - try to re-index existing paths from config
 		paths = cfg.GetIndexPaths(indexName)
 		if len(paths) == 0 {
-			fmt.Printf("%sUsage: gls [index_name] index <path>%s\n", colorRed, colorReset)
+			fmt.Printf("%sUsage: glos [index_name] index <path>%s\n", colorRed, colorReset)
 			fmt.Printf("%sNo existing paths for index '%s'. Please provide a path.%s\n", colorRed, indexName, colorReset)
 			os.Exit(1)
 		}
@@ -182,7 +182,7 @@ func handleIndex(cfg *config.Config, indexName string, argOffset int) {
 			cfg.AddIndexPath(indexName, path)
 		}
 		homeDir, _ := os.UserHomeDir()
-		configPath := filepath.Join(homeDir, ".config", "gls", "config.json")
+		configPath := filepath.Join(homeDir, ".config", "glos", "config.json")
 		if err := cfg.SaveConfig(configPath); err != nil {
 			fmt.Printf("%sWarning: failed to save config: %v%s\n", colorYellow, err, colorReset)
 		}
@@ -193,7 +193,7 @@ func handleIndex(cfg *config.Config, indexName string, argOffset int) {
 
 func handleSearch(cfg *config.Config, indexName string, argOffset int) {
 	if len(os.Args) < argOffset+1 {
-		fmt.Printf("%sUsage: gls [index_name] search <query> [--fuzzy] [--distance N] [--limit N | -l N]%s\n", colorRed, colorReset)
+		fmt.Printf("%sUsage: glos [index_name] search <query> [--fuzzy] [--distance N] [--limit N | -l N]%s\n", colorRed, colorReset)
 		os.Exit(1)
 	}
 
@@ -228,7 +228,7 @@ func handleSearch(cfg *config.Config, indexName string, argOffset int) {
 	
 	// Check if index exists
 	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
-		fmt.Printf("%sError: index '%s' does not exist. Create it with: gls %s index <path>%s\n", 
+		fmt.Printf("%sError: index '%s' does not exist. Create it with: glos %s index <path>%s\n", 
 			colorRed, indexName, indexName, colorReset)
 		os.Exit(1)
 	}
@@ -301,7 +301,7 @@ func handleList(cfg *config.Config) {
 	
 	names := cfg.ListIndexNames()
 	if len(names) == 0 {
-		fmt.Printf("%sNo indexes found. Create one with: gls index <path>%s\n", colorYellow, colorReset)
+		fmt.Printf("%sNo indexes found. Create one with: glos index <path>%s\n", colorYellow, colorReset)
 		return
 	}
 
@@ -339,7 +339,7 @@ func handleDelete(cfg *config.Config, indexName string, argOffset int) {
 	if indexName == "" {
 		if len(os.Args) < argOffset+1 {
 			fmt.Printf("%sError: index name required%s\n", colorRed, colorReset)
-			fmt.Printf("Usage: gls delete <index_name>\n")
+			fmt.Printf("Usage: glos delete <index_name>\n")
 			os.Exit(1)
 		}
 		indexName = os.Args[argOffset]
@@ -348,7 +348,7 @@ func handleDelete(cfg *config.Config, indexName string, argOffset int) {
 	// Check if index exists
 	if _, exists := cfg.Indexes[indexName]; !exists {
 		fmt.Printf("%sError: index '%s' not found%s\n", colorRed, indexName, colorReset)
-		fmt.Printf("Use 'gls list' to see available indexes\n")
+		fmt.Printf("Use 'glos list' to see available indexes\n")
 		os.Exit(1)
 	}
 
@@ -369,7 +369,7 @@ func handleDelete(cfg *config.Config, indexName string, argOffset int) {
 
 	// Save config
 	homeDir, _ := os.UserHomeDir()
-	configPath := filepath.Join(homeDir, ".config", "gls", "config.json")
+	configPath := filepath.Join(homeDir, ".config", "glos", "config.json")
 	if err := cfg.SaveConfig(configPath); err != nil {
 		fmt.Printf("%sError saving config: %v%s\n", colorRed, err, colorReset)
 		os.Exit(1)
@@ -390,30 +390,30 @@ func printVersion() {
 		}
 	}
 	
-	fmt.Printf("%sgls version %s%s\n", colorCyan, version, colorReset)
+	fmt.Printf("%sglos version %s%s\n", colorCyan, version, colorReset)
 }
 
 func printUsage() {
 	fmt.Printf("%sGo Local Search - A fast local file search engine%s\n\n", colorCyan, colorReset)
 	fmt.Printf("Usage:\n")
-	fmt.Printf("  %sgls [index_name] index <path>%s    Index files in directory\n", colorGreen, colorReset)
-	fmt.Printf("  %sgls [index_name] search <query>%s  Search indexed files\n", colorGreen, colorReset)
-	fmt.Printf("  %sgls [index_name] <query>%s         Search (shorthand)\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos [index_name] index <path>%s    Index files in directory\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos [index_name] search <query>%s  Search indexed files\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos [index_name] <query>%s         Search (shorthand)\n", colorGreen, colorReset)
 	fmt.Printf("    %s--fuzzy%s                         Enable fuzzy matching\n", colorYellow, colorReset)
 	fmt.Printf("    %s--distance N%s                    Set max edit distance (default: 2)\n", colorYellow, colorReset)
 	fmt.Printf("    %s--limit N, -l N%s                 Limit results (default: 10)\n", colorYellow, colorReset)
-	fmt.Printf("  %sgls [index_name] stats%s           Show index statistics\n", colorGreen, colorReset)
-	fmt.Printf("  %sgls delete <index_name>%s          Delete an index\n", colorGreen, colorReset)
-	fmt.Printf("  %sgls list%s                          List all indexes\n", colorGreen, colorReset)
-	fmt.Printf("  %sgls help%s                          Show this help message\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos [index_name] stats%s           Show index statistics\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos delete <index_name>%s          Delete an index\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos list%s                          List all indexes\n", colorGreen, colorReset)
+	fmt.Printf("  %sglos help%s                          Show this help message\n", colorGreen, colorReset)
 	fmt.Printf("\nExamples:\n")
-	fmt.Printf("  gls index ~/Documents              # Index to 'default'\n")
-	fmt.Printf("  gls work index ~/Work              # Index to 'work'\n")
-	fmt.Printf("  gls \"golang tutorial\"              # Search in 'default'\n")
-	fmt.Printf("  gls work search \"function\"         # Search in 'work'\n")
-	fmt.Printf("  gls work \"function\" --fuzzy        # Fuzzy search in 'work'\n")
-	fmt.Printf("  gls delete work                    # Delete 'work' index\n")
-	fmt.Printf("  gls list                           # List all indexes\n")
+	fmt.Printf("  glos index ~/Documents              # Index to 'default'\n")
+	fmt.Printf("  glos work index ~/Work              # Index to 'work'\n")
+	fmt.Printf("  glos \"golang tutorial\"              # Search in 'default'\n")
+	fmt.Printf("  glos work search \"function\"         # Search in 'work'\n")
+	fmt.Printf("  glos work \"function\" --fuzzy        # Fuzzy search in 'work'\n")
+	fmt.Printf("  glos delete work                    # Delete 'work' index\n")
+	fmt.Printf("  glos list                           # List all indexes\n")
 }
 
 // getSnippetWithLine finds the first query term match, returns its 1-based line

@@ -1,4 +1,4 @@
-module github.com/piv-pav/gls
+module github.com/piv-pav/glos
 
 go 1.24.11
 

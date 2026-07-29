@@ -7,7 +7,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/piv-pav/gls/internal/util"
+	"github.com/piv-pav/glos/internal/util"
 )
 
 // Document represents an indexed document

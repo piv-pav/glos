@@ -1,11 +1,11 @@
-# Build gls binary
+# Build glos binary
 build:
-    go build -ldflags "-X main.Version=$(cat .version)" -o gls .
+    go build -ldflags "-X main.Version=$(cat .version)" -o glos .
 
-# Install gls using go install
+# Install glos using go install
 install:
     go install -ldflags "-X main.Version=$(cat .version)" .
-    @echo "Installed to $(go env GOPATH)/bin/gls"
+    @echo "Installed to $(go env GOPATH)/bin/glos"
 
 # Run tests
 test:
@@ -13,7 +13,7 @@ test:
 
 # Clean build artifacts
 clean:
-    rm -rf bin/ gls
+    rm -rf bin/ glos
 
 # Install dependencies
 deps:
@@ -32,6 +32,6 @@ lint:
 run-example: build
     mkdir -p /tmp/example-docs
     echo "# Example Document\nThis is a test document about Go programming." > /tmp/example-docs/test.md
-    ./gls index /tmp/example-docs
-    ./gls search "programming"
-    ./gls stats
+    ./glos index /tmp/example-docs
+    ./glos search "programming"
+    ./glos stats

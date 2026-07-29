@@ -14,34 +14,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.2.3] - 2026-05-27
 
 ### Changed
-- **Repository migration**: Moved to Codeberg (github.com/piv-pav/gls)
-- **Module path**: Updated to `github.com/piv-pav/gls`
-- **Install command**: `go install github.com/piv-pav/gls@latest`
+- **Repository migration**: Moved to Codeberg (github.com/piv-pav/glos)
+- **Module path**: Updated to `github.com/piv-pav/glos`
+- **Install command**: `go install github.com/piv-pav/glos@latest`
 - Updated all import paths in source code
 - Updated README and CHANGELOG URLs
 
 ## [0.2.0] - 2026-05-25
 
 ### Added
-- **Version command**: `gls --version` / `gls -v` / `gls version` to display version
+- **Version command**: `glos --version` / `glos -v` / `glos version` to display version
 - Version information embedded via ldflags during build
 
 ### Changed
-- **Simplified install**: Moved main.go to repo root for cleaner `go install github.com/piv-pav/gls@latest`
-- **Repo renamed**: `go-local-search` → `gls` on git server
-- **Module path**: Updated to `github.com/piv-pav/gls`
+- **Simplified install**: Moved main.go to repo root for cleaner `go install github.com/piv-pav/glos@latest`
+- **Repo renamed**: `go-local-search` → `glos` on git server
+- **Module path**: Updated to `github.com/piv-pav/glos`
 
 ## [0.1.0] - 2026-05-25
 
 ### Added
-- **Multiple named indexes**: Index different directories separately (`gls work index ~/Work`)
-- **CLI shorthand syntax**: `gls "query"` as shorthand for `gls search "query"`
-- **Index management**: `gls list` to show all indexes, `gls stats` for statistics
-- **Delete command**: `gls delete <index_name>` to remove indexes
+- **Multiple named indexes**: Index different directories separately (`glos work index ~/Work`)
+- **CLI shorthand syntax**: `glos "query"` as shorthand for `glos search "query"`
+- **Index management**: `glos list` to show all indexes, `glos stats` for statistics
+- **Delete command**: `glos delete <index_name>` to remove indexes
 - **Search result limiting**: `--limit`/`-l` flag (default: 10 results)
-- **Smart re-indexing**: `gls index` without path re-indexes existing paths from config
-- **XDG-compliant storage**: Indexes in `~/.cache/gls/`, config in `~/.config/gls/config.json`
-- **Binary rename**: `search` → `gls` for cleaner CLI UX
+- **Smart re-indexing**: `glos index` without path re-indexes existing paths from config
+- **XDG-compliant storage**: Indexes in `~/.cache/glos/`, config in `~/.config/glos/config.json`
+- **Binary rename**: `search` → `glos` for cleaner CLI UX
 - **Task automation**: Added `justfile` alongside Makefile
 
 ### Changed
@@ -55,7 +55,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Server configuration**: Removed server-related config options
 
 ### Fixed
-- Awkward CLI syntax (`search search "query"` → `gls "query"`)
+- Awkward CLI syntax (`search search "query"` → `glos "query"`)
 - Single global index limitation (now supports multiple named indexes)
 - Non-standard config paths (now XDG-compliant)
 
@@ -72,4 +72,4 @@ Initial upstream release by BaseMax/go-local-search with:
 ---
 
 **Fork source**: https://github.com/BaseMax/go-local-search  
-**Fork repository**: https://github.com/piv-pav/gls.git
+**Fork repository**: https://github.com/piv-pav/glos.git

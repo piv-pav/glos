@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/piv-pav/gls/internal/index"
+	"github.com/piv-pav/glos/internal/index"
 	bolt "go.etcd.io/bbolt"
 )
 

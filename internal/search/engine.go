@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/piv-pav/gls/internal/index"
-	"github.com/piv-pav/gls/internal/indexer"
-	"github.com/piv-pav/gls/internal/storage"
-	"github.com/piv-pav/gls/internal/tokenizer"
+	"github.com/piv-pav/glos/internal/index"
+	"github.com/piv-pav/glos/internal/indexer"
+	"github.com/piv-pav/glos/internal/storage"
+	"github.com/piv-pav/glos/internal/tokenizer"
 )
 
 // Engine is the main search engine

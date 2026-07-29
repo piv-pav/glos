@@ -1,11 +1,11 @@
-# Go Local Search (gls)
+# Go Local Search (glos)
 
 A fast, lightweight local full-text search engine for indexing and searching through your files (Markdown, text, and code). Built entirely in Go with inverted index data structures and persistent storage using BoltDB.
 
 **Forked from**: [BaseMax/go-local-search](https://github.com/BaseMax/go-local-search)
 
 **Fork changes**: 
-- Renamed binary from `search` to `gls`
+- Renamed binary from `search` to `glos`
 - Added support for multiple named indexes
 - Removed HTTP server (CLI-only now)
 - XDG-compliant storage paths
@@ -24,7 +24,7 @@ A fast, lightweight local full-text search engine for indexing and searching thr
 - 📝 **Multiple File Types**: Supports Markdown, text, and code files (.md, .txt, .go, .py, .js, .ts, .java, .c, .cpp, .rs, etc.)
 - 🎨 **Colored CLI Output**: Beautiful, colorized terminal output
 - 📚 **Multiple Named Indexes**: Organize indexes by project or category
-- 📁 **XDG-Compliant Storage**: Config in `~/.config/gls/`, indexes in `~/.cache/gls/`
+- 📁 **XDG-Compliant Storage**: Config in `~/.config/glos/`, indexes in `~/.cache/glos/`
 
 ## Installation
 
@@ -34,15 +34,15 @@ A fast, lightweight local full-text search engine for indexing and searching thr
 ### Build from Source
 
 ```bash
-git clone https://github.com/piv-pav/gls.git
-cd gls
-make build  # Creates bin/gls
+git clone https://github.com/piv-pav/glos.git
+cd glos
+make build  # Creates bin/glos
 ```
 
 ### Install Globally
 
 ```bash
-go install github.com/piv-pav/gls@latest
+go install github.com/piv-pav/glos@latest
 ```
 
 ## Usage
@@ -53,77 +53,77 @@ go install github.com/piv-pav/gls@latest
 
 Index to the default index:
 ```bash
-gls index /path/to/directory
+glos index /path/to/directory
 ```
 
 Create named indexes for different projects:
 ```bash
-gls work index ~/Work
-gls docs index ~/Documents
-gls notes index ~/Notes
+glos work index ~/Work
+glos docs index ~/Documents
+glos notes index ~/Notes
 ```
 
 #### Search
 
 Search in the default index:
 ```bash
-gls search "your query"
-gls "your query"  # shorthand
+glos search "your query"
+glos "your query"  # shorthand
 ```
 
 Search in a named index:
 ```bash
-gls work search "function"
-gls work "function"  # shorthand
+glos work search "function"
+glos work "function"  # shorthand
 ```
 
 Fuzzy search (tolerates typos):
 ```bash
-gls "pythn" --fuzzy
-gls work "handleRequest" --fuzzy --distance 2
+glos "pythn" --fuzzy
+glos work "handleRequest" --fuzzy --distance 2
 ```
 
 #### List Indexes
 
 Show all available indexes:
 ```bash
-gls list
+glos list
 ```
 
 #### Delete Index
 
 Remove an index (deletes config entry and .db file):
 ```bash
-gls delete work         # Delete 'work' index
-gls delete <name>       # Delete any named index
+glos delete work         # Delete 'work' index
+glos delete <name>       # Delete any named index
 ```
 
 #### Statistics
 
 View index statistics:
 ```bash
-gls stats           # default index
-gls work stats      # named index
+glos stats           # default index
+glos work stats      # named index
 ```
 
 Limit search results:
 ```bash
-gls search "query" --limit 20   # Show max 20 results
-gls "query" -l 5               # Show max 5 results
+glos search "query" --limit 20   # Show max 20 results
+glos "query" -l 5               # Show max 5 results
 ```
 Default limit: 10 results
 
 Re-index without specifying paths (uses stored config):
 ```bash
-gls work index                  # Re-indexes all paths configured for 'work'
+glos work index                  # Re-indexes all paths configured for 'work'
 ```
 
 #### View Statistics
 
 Show index statistics:
 ```bash
-gls stats           # default index
-gls work stats      # named index
+glos stats           # default index
+glos work stats      # named index
 ```
 
 Output:
@@ -231,11 +231,11 @@ Fuzzy search uses Levenshtein distance to find similar terms:
 
 ## Configuration
 
-Configuration is stored in `~/.config/gls/config.json`:
+Configuration is stored in `~/.config/glos/config.json`:
 
 ```json
 {
-  "storage_dir": "~/.cache/gls",
+  "storage_dir": "~/.cache/glos",
   "indexes": {
     "default": ["/path/to/directory"],
     "work": ["/path/to/work"],
@@ -246,7 +246,7 @@ Configuration is stored in `~/.config/gls/config.json`:
 }
 ```
 
-Indexes are stored as `.db` files in `~/.cache/gls/`.
+Indexes are stored as `.db` files in `~/.cache/glos/`.
 
 ## Performance
 
@@ -260,44 +260,44 @@ Indexes are stored as `.db` files in `~/.cache/gls/`.
 ### Index your projects
 
 ```bash
-gls index ~/projects
-gls docs index ~/Documents
-gls notes index ~/notes
+glos index ~/projects
+glos docs index ~/Documents
+glos notes index ~/notes
 ```
 
 ### Search examples
 
 ```bash
 # Find Go tutorials
-gls search "golang tutorial"
+glos search "golang tutorial"
 
 # Find function definitions (with fuzzy matching)
-gls search "handleRequest" --fuzzy
+glos search "handleRequest" --fuzzy
 
 # Search for algorithms with limited results
-gls search "binary search algorithm" --limit 5
+glos search "binary search algorithm" --limit 5
 
 # Find Python code in specific index
-gls docs "python class definition"
+glos docs "python class definition"
 ```
 
 ### Working with Indexes
 
 ```bash
 # Create multiple indexes for different purposes
-gls work index ~/Work
-gls notes index ~/Notes
-gls docs index ~/Documents
+glos work index ~/Work
+glos notes index ~/Notes
+glos docs index ~/Documents
 
 # Re-index without specifying path (uses config)
-gls work index
-gls notes index
+glos work index
+glos notes index
 
 # List all indexes
-gls list
+glos list
 
 # View statistics
-gls work stats
+glos work stats
 ```
 
 ## Dependencies
@@ -309,7 +309,7 @@ gls work stats
 ```
 .
 ├── cmd/
-│   └── gls/             # Main CLI application
+│   └── glos/             # Main CLI application
 ├── internal/
 │   ├── tokenizer/       # Text tokenization and normalization
 │   ├── index/           # Inverted index implementation
