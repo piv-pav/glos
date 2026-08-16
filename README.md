@@ -2,29 +2,23 @@
 
 A fast, lightweight local full-text search engine for indexing and searching through your files (Markdown, text, and code). Built entirely in Go with inverted index data structures and persistent storage using BoltDB.
 
-**Forked from**: [BaseMax/go-local-search](https://github.com/BaseMax/go-local-search)
+The main idea of this project was to create lightweight single-binary search engine that can be used by AI to search through indexed storages (Notes, Documentation, Codebase, etc.).
 
-**Fork changes**: 
-- Renamed binary from `search` to `glos`
-- Added support for multiple named indexes
-- Removed HTTP server (CLI-only now)
-- XDG-compliant storage paths
-- Default limit of 10 search results (configurable via `--limit`)
-- Added `justfile` for task automation
+Application support multiple named indexes that can point to different locations. Search returns weight, matched pattern and full path to the file, so AI can read it after.
 
 ## Features
 
-- 🚀 **Fast Indexing**: Efficiently indexes files using inverted index data structures
-- 🔍 **Instant Search**: Sub-second search across thousands of files
-- 🎯 **TF-IDF Ranking**: Intelligent relevance scoring using Term Frequency-Inverse Document Frequency
-- 🔤 **Fuzzy Matching**: Find results even with typos using Levenshtein distance
-- 📊 **Incremental Indexing**: Only re-indexes modified files
-- 💾 **Persistent Storage**: Indexes stored on disk using BoltDB
-- 🖥️ **CLI Interface**: Fast command-line tool
-- 📝 **Multiple File Types**: Supports Markdown, text, and code files (.md, .txt, .go, .py, .js, .ts, .java, .c, .cpp, .rs, etc.)
-- 🎨 **Colored CLI Output**: Beautiful, colorized terminal output
-- 📚 **Multiple Named Indexes**: Organize indexes by project or category
-- 📁 **XDG-Compliant Storage**: Config in `~/.config/glos/`, indexes in `~/.cache/glos/`
+- **Fast Indexing**: Efficiently indexes files using inverted index data structures
+- **Instant Search**: Sub-second search across thousands of files
+- **TF-IDF Ranking**: Intelligent relevance scoring using Term Frequency-Inverse Document Frequency
+- **Fuzzy Matching**: Find results even with typos using Levenshtein distance
+- **Incremental Indexing**: Only re-indexes modified files
+- **Persistent Storage**: Indexes stored on disk using BoltDB
+- **CLI Interface**: Fast command-line tool
+- **Multiple File Types**: Supports Markdown, text, and code files (.md, .txt, .go, .py, .js, .ts, .java, .c, .cpp, .rs, etc.)
+- **Colored CLI Output**: Beautiful, colorized terminal output
+- **Multiple Named Indexes**: Organize indexes by project or category
+- **XDG-Compliant Storage**: Config in `~/.config/glos/`, indexes in `~/.cache/glos/`
 
 ## Installation
 
@@ -333,7 +327,7 @@ This project is licensed under the GPL-3.0 License - see the LICENSE file for de
 
 ## Author
 
-- **Max Base** - [@BaseMax](https://github.com/BaseMax)
+- **Pavel Pivovarov** - [@piv-pav](https://github.com/pivpav)
 
 ## Acknowledgments
 
